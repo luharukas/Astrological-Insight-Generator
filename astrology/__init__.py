@@ -1,0 +1,3 @@
+"""
+Astrological Insight Generator package.
+"""
