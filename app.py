@@ -10,7 +10,7 @@ import uvicorn
 from astrology.input_parser import parse_date, parse_time, parse_location
 from astrology.zodiac import get_zodiac_sign
 from llmkit.llm import invoke_llm_with_fallback
-
+from astrology.translator import translate
 
 class PredictRequest(BaseModel):
     name: str
@@ -99,7 +99,6 @@ def predict(req: PredictRequest):
     # Translate to requested language if needed, caching translations
     if req.language != 'en':
         if req.language not in lang_cache:
-            from astrology.translator import translate
             try:
                 translated = translate(
                     texts=insight_en,

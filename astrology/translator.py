@@ -49,12 +49,14 @@ def _load_reverse_model():
     global _rev_tokenizer, _rev_model
     if _rev_model is None:
         _rev_tokenizer = AutoTokenizer.from_pretrained(
-            _REV_MODEL_NAME, trust_remote_code=True,show_progress = True,
+            _REV_MODEL_NAME, trust_remote_code=True
         )
         _rev_model = AutoModelForSeq2SeqLM.from_pretrained(
-            _REV_MODEL_NAME, trust_remote_code=True,show_progress = True
+            _REV_MODEL_NAME, trust_remote_code=True
         )
         _rev_model.to(_DEVICE)
+
+_load_reverse_model()
 
 def translate(
     texts: Union[str, List[str]],
@@ -78,11 +80,6 @@ def translate(
 
     # Determine translation direction and select model/tokenizer
     if src_flores == ISO2FLORES['en'] and tgt_flores != ISO2FLORES['en']:
-        # English to Indic
-        try:
-            _load_reverse_model()
-        except Exception as e:
-            raise RuntimeError(f"Failed to load reverse translation model: {e}")
         if _rev_tokenizer is None or _rev_model is None:
             raise RuntimeError("Reverse translation model is not available")
         tokenizer = _rev_tokenizer  # type: ignore[assignment]

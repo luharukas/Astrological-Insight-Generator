@@ -23,7 +23,9 @@ RUN git clone https://github.com/VarunGumma/IndicTransToolkit.git
 # Copy and install Python dependencies
 COPY requirements.txt ./
 RUN pip install --upgrade pip && \
-    pip install -r requirements.txt
+    pip install -r requirements.txt 
+    
+RUN pip install --editable ./IndicTransToolkit/
 
 # Copy application code
 COPY . .
