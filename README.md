@@ -31,27 +31,30 @@ A FastAPI-based service that generates personalized daily astrological insights.
 - API keys for LLM providers and translation:
   - `OPENAI_API_KEY` (OpenAI)
   - `GEMINI_API_KEY` (Google Gemini)
-  - `HF_TOKEN` (Hugging Face token for IndicTrans2 model; optional but recommended)
+  - `HF_TOKEN` (Hugging Face token for IndicTrans2 model)
 
 ## Installation
-1. Clone the repository:
+1. Clone the main repository and the embedded IndicTransToolkit:
    ```bash
-   git clone <repo_url>
-   cd <repo_dir>
+   git clone https://github.com/luharukas/Astrological-Insight-Generator.git
+   cd Astrological-Insight-Generator
+   git clone https://github.com/VarunGumma/IndicTransToolkit.git
    ```
 2. Create and activate a virtual environment:
    ```bash
    python -m venv venv
    source venv/bin/activate
    ```
-3. Install dependencies:
+3. Install Python dependencies:
    ```bash
+   pip install --upgrade pip
    pip install -r requirements.txt
+   pip install --editable ./IndicTransToolkit/
    ```
 4. Define environment variables (e.g., in a `.env` file at project root):
    ```ini
-   OPENAI_APIPLATFORM_TRIAGING_AGENT_API_KEY=your_openai_key
-   GEMINI_APIPLATFORM_TRIAGING_AGENT_API_KEY=your_gemini_key
+   OPENAI_API_KEY=your_openai_key
+   GEMINI_API_KEY=your_gemini_key
    HF_TOKEN=your_huggingface_token
    ```
 
@@ -60,6 +63,20 @@ A FastAPI-based service that generates personalized daily astrological insights.
 Start the application with Uvicorn:
 ```bash
 uvicorn app:app --reload --host 0.0.0.0 --port 8000
+```
+
+### Using Docker
+
+Build the Docker image:
+
+```bash
+docker build -t astrological-insight-api .
+```
+
+Run the container (using a `.env` file for credentials):
+
+```bash
+docker run -d --name astro-api --env-file .env -p 8000:8000 astrological-insight-api
 ```
 
 ### API Endpoints
