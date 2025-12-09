@@ -18,6 +18,8 @@ RUN apt-get update && \
         python3-dev && \
     rm -rf /var/lib/apt/lists/*
 
+RUN git clone https://github.com/VarunGumma/IndicTransToolkit.git
+
 # Copy and install Python dependencies
 COPY requirements.txt ./
 RUN pip install --upgrade pip && \
